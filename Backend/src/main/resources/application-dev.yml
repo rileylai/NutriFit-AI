@@ -1,0 +1,47 @@
+spring:
+  datasource:
+    # Set via environment variables in .env or deployment pipeline
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/nutrifit_dev}
+    # Set via environment variables in .env or deployment pipeline
+    username: ${POSTGRES_USERNAME:postgres}
+    # Set via environment variables in .env or deployment pipeline
+    password: ${POSTGRES_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+gemini:
+  api:
+    # Set via environment variables in .env or deployment pipeline
+    key: ${GEMINI_API_KEY:demo_gemini_key}
+
+# ImgBB - Free image hosting (recommended)
+imgbb:
+  api:
+    url: https://api.imgbb.com/1/upload
+    # Set via environment variables in .env or deployment pipeline
+    key: ${IMGBB_API_KEY:demo_imgbb_key}
+
+# Picui (alternative - currently having token issues)
+picui:
+  api:
+    url: https://www.picui.cn/api/v1/upload
+    # Set via environment variables in .env or deployment pipeline
+    key: ${PICUI_API_KEY:demo_picui_key}
+
+# Note: All sensitive credentials are managed via environment variables.

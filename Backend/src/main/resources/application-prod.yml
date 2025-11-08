@@ -1,0 +1,59 @@
+# ===========================================
+# NutriFit App - Production Configuration
+# ===========================================
+# Activated when: mvn clean package -P prod
+# Port: 80 (both frontend and backend served from same port)
+
+server:
+  port: 8080  # Standard HTTP port (requires admin privileges on Windows)
+
+spring:
+  datasource:
+    # Set via environment variables in .env or deployment pipeline
+    url: ${POSTGRES_URL}
+    # Set via environment variables in .env or deployment pipeline
+    username: ${POSTGRES_USERNAME}
+    # Set via environment variables in .env or deployment pipeline
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      maximum-pool-size: 20  # Higher pool size for production
+      minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # Use 'validate' in real production after initial setup
+    show-sql: false  # Disable SQL logging in production
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# Frontend URL for CORS and email links
+app:
+  frontend:
+    # Set via environment variables in .env or deployment pipeline
+    url: ${APP_FRONTEND_URL}
+
+# Gemini AI API (same as dev for now, should use env vars in real production)
+gemini:
+  api:
+    # Set via environment variables in .env or deployment pipeline
+    key: ${GEMINI_API_KEY}
+
+# ImgBB - Free image hosting
+imgbb:
+  api:
+    url: https://api.imgbb.com/1/upload
+    # Set via environment variables in .env or deployment pipeline
+    key: ${IMGBB_API_KEY}
+
+# Picui (alternative)
+picui:
+  api:
+    url: https://www.picui.cn/api/v1/upload
+    # Set via environment variables in .env or deployment pipeline
+    key: ${PICUI_API_KEY}
+
+# Note: All sensitive credentials are managed via environment variables.
